@@ -1,33 +1,37 @@
 class BeerSong
-        def initialize
-        end
+  def verse(line_number)
+    if line_number > 0 then
+      ['%s %s of beer on the wall, %s %s of beer.' % ([format_number(line_number), pluralize_bottle(line_number)] * 2),
+      'Take %s down and pass it around, %s %s of beer on the wall.' % [one_it(line_number), format_number(line_number - 1), pluralize_bottle(line_number - 1)]].join("\n")+"\n"
+    else
+      ['No more bottles of beer on the wall, no more bottles of beer.',
+     'Go to the store and buy some more, 99 bottles of beer on the wall.'].join("\n")+"\n"
+    end
+  end
+  
+  def verses(first_number, last_number)
+    first_number.downto(last_number).map do | line_number |
+      verse(line_number)
+    end.join("\n")
+  end
+  
+  def format_number(line_number)
+    if line_number == 0 then 'no more' else line_number end
+  end
+  
+  def lyrics
+    verses(99, 0)
+  end
+  
+  def pluralize_bottle(line_number)
+    if line_number == 1 then 'bottle' else 'bottles' end
+  end
+  
+  def one_it(line_number)
+    if line_number == 1 then 'it' else 'one' end
+  end
+end
 
-        def verse (number_of_line)
-                @line_number = number_of_line
-                #@bottle_noun = "bottles"
-                if @line_number > 1
-                        then start_verse="#{@line_number} bottles of beer on the wall, #{@line_number} bottles of beer.\n"
-                else
-                        if @line_number == 1
-                                then start_verse="#{@line_number} bottle of beer on the wall, #{@line_number} bottle of beer.\n"
-                        else
-                                start_verse="No more bottles of beer on the wall, no more bottles of beer.\n"
-                        end 
-                end
-                if @line_number > 2
-                        then end_verse="Take one down and pass it around, #{@line_number-1} bottles of beer on the wall.\n"
-                else 
-                        if @line_number == 2
-                                then end_verse="Take one down and pass it around, #{@line_number-1} bottle of beer on the wall.\n"
-                        else
-                                if @line_number == 1
-                                        then end_verse="Take it down and pass it around, no more bottles of beer on the wall.\n"
-                                else
-                                        end_verse="Go to the store and buy some more, 99 bottles of beer on the wall.\n"
-                                end
-                        end
-                end
-                verse=start_verse+end_verse
-        end
-
+class BookKeeping
+  VERSION = 2
 end
